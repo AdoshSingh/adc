@@ -1,0 +1,32 @@
+Am=5;
+Fm=20;
+Fc=50;
+M=0.5;
+
+Fs=200e3;
+T = 1/Fs;
+t = 0:T:1;
+MS = Am.*cos(2*pi*Fm*t);
+CS = cos(2*pi*Fc*t);
+FMOD = cos((2*pi*Fc*t)+Am.*(M.*sin(2*pi*Fm*t)));
+fdmod = fmdemod(FMOD, Fc, Fs, 10);
+
+subplot(411);
+plot(t, MS, "-", "Color", "b");
+xlabel("time");
+ylabel("amplitude");
+
+subplot(412);
+plot(t, CS, "-", "Color", "r");
+xlabel("time");
+ylabel("amplitude");
+
+subplot(413);
+plot(t, FMOD, "-", "Color", "m");
+xlabel("time");
+ylabel("amplitude");
+
+subplot(414);
+plot(t, fdmod, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
