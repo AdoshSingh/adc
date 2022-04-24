@@ -1,0 +1,23 @@
+Fs=100;
+T=1/Fs;
+t=0:T:1-T;
+
+Am = 1;
+Fm = 5;
+
+MS = Am.*(cos(2*pi*Fm*t));
+
+subplot(211);
+plot(t,MS);
+xlabel("time");
+ylabel("amplitude");
+title("Message signal");
+
+subplot(212);
+stem(t,MS,"Color","b");
+hold on
+stairs(t,MS,"Color","m");
+hold off
+xlabel("time");
+ylabel("amplitude");
+title("Sample and Hold Sampled Signal");
