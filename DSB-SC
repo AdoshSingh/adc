@@ -1,0 +1,46 @@
+Am=1;
+Fm=5;
+Fc=1000;
+Ac=5;
+
+Fs=200e3;
+T=1/Fs;
+t=0:T:1-T;
+
+MS = Am.*cos(2*pi*Fm*t);
+CS = Ac.*cos(2*pi*Fc*t);
+DSB = MS.*CS;
+DM = DSB.*(2*cos(2*pi*Fc*t));
+[b,a] = butter(5, Fc*2/Fs);
+Y = DM/Ac;
+Y = filtfilt(b,a,Y);
+
+subplot(511);
+plot(t, MS);
+xlabel("Time");
+ylabel("Amplitude");
+title("Message Signal");
+
+subplot(512);
+plot(t, CS);
+xlabel("Time");
+ylabel("Amplitude");
+title("Carrier Signal");
+
+subplot(513);
+plot(t, DSB);
+xlabel("Time");
+ylabel("Amplitude");
+title("Modulated Signal");
+
+subplot(514);
+plot(t, DM);
+xlabel("Time");
+ylabel("Amplitude");
+title("Demodulated signal before passing through low pass filter");
+
+subplot(515);
+plot(t, Y);
+xlabel("Time");
+ylabel("Amplitude");
+title("Demodulated signal before passing through low pass filter");
