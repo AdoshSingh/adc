@@ -1,0 +1,50 @@
+Fs=200e3;
+T=1/Fs;
+t=0:T:1-T;
+
+Am = 0.5;
+Fm = 2;
+Fc = 50;t
+
+MS = Am.*cos(2*pi*Fm*t);
+CS = square(2*pi*Fc*t);
+
+n = length(CS);
+
+for i=1:n
+if CS(i)<=0
+CS(i)=0;
+else
+CS(i)=1;
+end
+end
+
+MOD = CS.*MS;
+
+for i=2:n
+if CS(i) == 1 && CS(i-1) == 0
+MOD(i) = CS(i).*MS(i);
+elseif CS(i) == 1 && CS(i-1) == 1
+MOD(i) = MOD(i-1);
+else
+MOD(i)=0;
+end
+end
+
+subplot(311);
+plot(t,MS);
+xlabel("time");
+ylabel("amplitude");
+title("message signal");
+
+subplot(312);
+plot(t,CS);
+xlabel("time");
+ylabel("amplitude");
+title("Carrier signal");
+
+subplot(313);
+plot(t,MOD);
+xlabel("time");
+ylabel("amplitude");
+title("Natural sampled signal");
