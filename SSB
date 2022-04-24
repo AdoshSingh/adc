@@ -1,0 +1,72 @@
+Am=5;
+Fm=20;
+Fc=50;
+Ac=5;
+
+Fs=200e3;
+T = 1/Fs;
+t = 0:T:1;
+
+MS = Am.*cos(2*pi*Fm*t);
+MH = Am.*sin(2*pi*Fm*t);
+CS = Ac.*cos(2*pi*Fc*t);
+CH = Ac.*sin(2*pi*Fc*t);
+M1 = MS.*CS;
+M2 = MH.*CH;
+USB = M1 - M2;
+LSB = M1 + M2;
+DM1 = USB.*(2*cos(2*pi*Fc*t));
+DM2 = LSB.*(2*cos(2*pi*Fc*t));
+[b, a] = butter(5, Fc*2/Fs);
+Y1 = DM1/Ac;
+Y1 = filtfilt(b,a,Y1);
+Y2 = DM2/Ac;
+Y2 = filtfilt(b,a,Y2);
+
+subplot(421);
+plot(t, MS, "-", "Color", "b");
+xlabel("time");
+ylabel("amplitude");
+title("Message Signal");
+
+subplot(422);
+plot(t, CS, "-", "Color", "r");
+xlabel("time");
+ylabel("amplitude");
+title("Carrier Signal");
+
+subplot(423);
+plot(t, USB, "-", "Color", "m");
+xlabel("time");
+ylabel("amplitude");
+title("Modulated Signal for Upper Side Band");
+
+subplot(424);
+plot(t, LSB, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
+title("Modulated Signal for Lower Side Band");
+
+subplot(425);
+plot(t, DM1, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
+title("Demodulated Signal for USB Before Passing Through Low Pass Filter");
+
+subplot(426);
+plot(t, DM2, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
+title("Demodulated Signal for LSB Before Passing Through Low Pass Filter");
+
+subplot(427);
+plot(t, Y1, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
+title("Demodulated Signal for USB After Passing Through Low Pass Filter");
+
+subplot(428);
+plot(t, Y2, "-", "Color", "c");
+xlabel("time");
+ylabel("amplitude");
+title("Demodulated Signal for LSB After Passing Through Low Pass Filter");
