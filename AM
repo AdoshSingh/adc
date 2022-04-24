@@ -1,0 +1,31 @@
+Fs=2000e3;
+T=1/Fs;
+t=0:T:1-T;
+
+Am = 0.5;
+Fm = 2;
+Ac = 1;
+Fc = 50;
+
+MS = Am.*cos(2*pi*Fm*t);
+CS = Ac.*cos(2*pi*Fc*t);
+
+S = CS.*(1+MS/Ac);
+
+subplot(211);
+plot(t,S);
+xlabel("time");
+ylabel("amplitude");
+title("Modulated Signal");
+
+envelope = abs(hilbert(S));
+
+subplot(212);
+plot(t,S,"Color","r");
+title("Envelope Detection");
+
+hold on
+
+plot(t,envelope, "Color","g");
+
+hold off;
