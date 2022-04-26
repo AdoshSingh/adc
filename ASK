@@ -20,6 +20,12 @@ ylabel('amplitude(volt)');
 xlabel(' time(sec)');
 title('transmitting information as digital signal');
 
+
+
+A1=10;                     
+A2=0;                       
+br=1/bp;
+f=br*2;
 t3=bp/99:bp/99:bp*length(x);
 y=A1*cos(2*pi*f*t3);
 subplot(4,1,2);
